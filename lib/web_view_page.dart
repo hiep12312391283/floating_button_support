@@ -85,6 +85,7 @@ class _WebViewPageState extends State<WebViewPage> {
                   "appName": widget.appName,
                   "currentRoute": widget.route,
                 };
+                await Future.delayed(const Duration(milliseconds: 300));
                 await controller.evaluateJavascript(
                   source: """
                     window.APP_INFO = ${jsonEncode(appInfo)};
