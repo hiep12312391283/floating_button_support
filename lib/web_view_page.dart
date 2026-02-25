@@ -91,6 +91,9 @@ class _WebViewPageState extends State<WebViewPage> {
                     window.dispatchEvent(new Event('appInfoReady'));
                      """,
                 );
+                print(widget.version);
+                print(widget.appName);
+                print(widget.route);
               },
             ),
             Obx(
