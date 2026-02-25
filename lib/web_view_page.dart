@@ -21,8 +21,6 @@ class WebViewPage extends StatefulWidget {
 }
 
 class _WebViewPageState extends State<WebViewPage> {
-  InAppWebViewController? _webViewController;
-
   final _isLoading = true.obs;
   final _progress = 0.0.obs;
 
@@ -63,8 +61,6 @@ class _WebViewPageState extends State<WebViewPage> {
                 javaScriptCanOpenWindowsAutomatically: true,
               ),
               onWebViewCreated: (controller) async {
-                _webViewController = controller;
-
                 controller.addJavaScriptHandler(
                   handlerName: 'closeWebView',
                   callback: (args) {

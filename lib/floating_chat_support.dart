@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'web_view_page.dart';
 
-class FloatingChatButton extends StatelessWidget {
+class FloatingChatSupport extends StatelessWidget {
   final String appName;
   final String version;
   final String route;
 
-  const FloatingChatButton({
+  const FloatingChatSupport({
     super.key,
     required this.appName,
     required this.version,
