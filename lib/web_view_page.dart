@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
@@ -75,6 +73,24 @@ class _WebViewPageState extends State<WebViewPage> {
                     if (mounted) Navigator.pop(context);
                   },
                 );
+
+                controller.addJavaScriptHandler(
+                  handlerName: 'getAppInfo',
+                  callback: (args) {
+                    return {
+                      "version": widget.version,
+                      "currentRoute": widget.route,
+                      "botToken": widget.botToken,
+                      "chatId": widget.chatId,
+                      "threadIdFeedback": widget.threadIdFeedback,
+                      "threadIdComplaint": widget.threadIdComplaint,
+                      "threadIdNewFeature": widget.threadIdNewFeature,
+                    };
+                  },
+                );
+              },
+              onConsoleMessage: (controller, consoleMessage) {
+                print('JS Console từ web: ${consoleMessage.message}');
               },
               onLoadStart: (controller, url) {
                 _isLoading.value = true;
@@ -87,27 +103,27 @@ class _WebViewPageState extends State<WebViewPage> {
                   _isLoading.value = false;
                 }
               },
-              onLoadStop: (controller, url) async {
-                final appInfo = {
-                  "version": widget.version,
-                  "currentRoute": widget.route,
-                  "botToken": widget.botToken,
-                  "chatId": widget.chatId,
-                  "threadIdFeedBack": widget.threadIdFeedback,
-                  "threadIdComplaint": widget.threadIdComplaint,
-                  "threadIdNewFeature": widget.threadIdNewFeature,
-                };
+              // onLoadStop: (controller, url) async {
+              //   final appInfo = {
+              //     "version": widget.version,
+              //     "currentRoute": widget.route,
+              //     "botToken": widget.botToken,
+              //     "chatId": widget.chatId,
+              //     "threadIdFeedBack": widget.threadIdFeedback,
+              //     "threadIdComplaint": widget.threadIdComplaint,
+              //     "threadIdNewFeature": widget.threadIdNewFeature,
+              //   };
 
-                await Future.delayed(const Duration(milliseconds: 300));
-                await controller.evaluateJavascript(
-                  source: """
-                    window.APP_INFO = ${jsonEncode(appInfo)};
-                    window.dispatchEvent(new Event('appInfoReady'));
-                     """,
-                );
-                print(widget.version);
-                print(widget.route);
-              },
+              //   await Future.delayed(const Duration(milliseconds: 300));
+              //   await controller.evaluateJavascript(
+              //     source: """
+              //       window.APP_INFO = ${jsonEncode(appInfo)};
+              //       window.dispatchEvent(new Event('appInfoReady'));
+              //        """,
+              //   );
+              //   print(widget.version);
+              //   print(widget.route);
+              // },
             ),
             Obx(
               () => _isLoading.value
