@@ -3,15 +3,23 @@ import 'package:flutter/material.dart';
 import 'web_view_page.dart';
 
 class FloatingButtonChatSupport extends StatelessWidget {
-  final String appName;
   final String version;
   final String route;
+  final String botToken;
+  final String chatId;
+  final String? threadIdFeedback;
+  final String? threadIdComplaint;
+  final String? threadIdNewFeature;
 
   const FloatingButtonChatSupport({
     super.key,
-    required this.appName,
     required this.version,
     required this.route,
+    required this.botToken,
+    required this.chatId,
+    this.threadIdFeedback,
+    this.threadIdComplaint,
+    this.threadIdNewFeature,
   });
 
   @override
@@ -25,9 +33,13 @@ class FloatingButtonChatSupport extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (_) => WebViewPage(
-                appName: appName,
                 version: version,
                 route: route,
+                botToken: botToken,
+                chatId: chatId,
+                threadIdFeedback: threadIdFeedback,
+                threadIdComplaint: threadIdComplaint,
+                threadIdNewFeature: threadIdNewFeature,
               ),
             ),
           );

@@ -5,15 +5,23 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
 class WebViewPage extends StatefulWidget {
-  final String appName;
   final String version;
   final String route;
+  final String botToken;
+  final String chatId;
+  final String? threadIdFeedback;
+  final String? threadIdComplaint;
+  final String? threadIdNewFeature;
 
   const WebViewPage({
     super.key,
-    required this.appName,
     required this.version,
     required this.route,
+    required this.botToken,
+    required this.chatId,
+    this.threadIdFeedback,
+    this.threadIdComplaint,
+    this.threadIdNewFeature,
   });
 
   @override
@@ -82,9 +90,14 @@ class _WebViewPageState extends State<WebViewPage> {
               onLoadStop: (controller, url) async {
                 final appInfo = {
                   "version": widget.version,
-                  "appName": widget.appName,
                   "currentRoute": widget.route,
+                  "botToken": widget.botToken,
+                  "chatId": widget.chatId,
+                  "threadIdFeedBack": widget.threadIdFeedback,
+                  "threadIdComplaint": widget.threadIdComplaint,
+                  "threadIdNewFeature": widget.threadIdNewFeature,
                 };
+
                 await Future.delayed(const Duration(milliseconds: 300));
                 await controller.evaluateJavascript(
                   source: """
@@ -93,7 +106,6 @@ class _WebViewPageState extends State<WebViewPage> {
                      """,
                 );
                 print(widget.version);
-                print(widget.appName);
                 print(widget.route);
               },
             ),
